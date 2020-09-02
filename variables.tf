@@ -1,6 +1,12 @@
 #=============================#
 # Cloudwatch Billing alert    #
 #=============================#
+variable "create" {
+  description = "Conditionally create."
+  type        = bool
+  default     = true
+}
+
 variable "aws_env" {
   description = "AWS environment you are deploying to. Will be appended to SNS topic and alarm name. (e.g. dev, stage, prod)"
   type        = string

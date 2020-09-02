@@ -3,7 +3,7 @@
 # if(var.aws_sns_topic_arn != "" && var.aws_account_id != "")
 #
 resource "aws_cloudwatch_metric_alarm" "account_billing_alarm_to_existing_sns" {
-  count               = var.aws_sns_topic_arn != "" && var.aws_account_id != "" ? 1 : 0
+  count               = var.aws_sns_topic_arn != "" && var.aws_account_id != "" && var.create ? 1 : 0
   alarm_name          = "account-billing-alarm-${lower(var.currency)}-${var.aws_env}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
@@ -28,7 +28,7 @@ resource "aws_cloudwatch_metric_alarm" "account_billing_alarm_to_existing_sns" {
 # if(var.aws_sns_topic_arn != "" && var.aws_account_id == "")
 #
 resource "aws_cloudwatch_metric_alarm" "consolidated_accounts_billing_alarm_to_existing_sns" {
-  count               = var.aws_sns_topic_arn != "" && var.aws_account_id == "" ? 1 : 0
+  count               = var.aws_sns_topic_arn != "" && var.aws_account_id == "" && var.create ? 1 : 0
   alarm_name          = "account-billing-alarm-${lower(var.currency)}-${var.aws_env}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
@@ -52,7 +52,7 @@ resource "aws_cloudwatch_metric_alarm" "consolidated_accounts_billing_alarm_to_e
 # if(var.aws_sns_topic_arn == "")
 #
 resource "aws_sns_topic" "sns_alert_topic" {
-  count = var.aws_sns_topic_arn == "" ? 1 : 0
+  count = var.aws_sns_topic_arn == "" && var.create ? 1 : 0
   name  = "billing-alarm-notification-${lower(var.currency)}-${var.aws_env}"
 
   tags = var.tags
@@ -63,7 +63,7 @@ resource "aws_sns_topic" "sns_alert_topic" {
 # if(var.aws_sns_topic_arn == "" && var.aws_account_id != "")
 #
 resource "aws_cloudwatch_metric_alarm" "account_billing_alarm_to_new_sns" {
-  count               = var.aws_sns_topic_arn == "" && var.aws_account_id != "" ? 1 : 0
+  count               = var.aws_sns_topic_arn == "" && var.aws_account_id != "" && var.create ? 1 : 0
   alarm_name          = "account-billing-alarm-${lower(var.currency)}-${var.aws_env}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
@@ -88,7 +88,7 @@ resource "aws_cloudwatch_metric_alarm" "account_billing_alarm_to_new_sns" {
 # if(var.aws_sns_topic_arn == "" && var.aws_account_id == "")
 #
 resource "aws_cloudwatch_metric_alarm" "consolidated_accounts_billing_alarm_to_new_sns" {
-  count               = var.aws_sns_topic_arn == "" && var.aws_account_id == "" ? 1 : 0
+  count               = var.aws_sns_topic_arn == "" && var.aws_account_id == "" && var.create ? 1 : 0
   alarm_name          = "account-billing-alarm-${lower(var.currency)}-${var.aws_env}"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
